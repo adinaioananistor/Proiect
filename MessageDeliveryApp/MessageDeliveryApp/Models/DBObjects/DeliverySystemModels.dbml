@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="deliverysystem" Class="DeliverySystemModelsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\deliverysystem.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="deliverysystemConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Company" Member="Companies">
+    <Type Name="Company">
+      <Column Name="IDCompany" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDDeliverySystem" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CompanyName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Addres" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="DeliverySystem_Company" Member="DeliverySystem" ThisKey="IDDeliverySystem" OtherKey="IDDeliverySystem" Type="DeliverySystem" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DeliverySystem" Member="DeliverySystems">
+    <Type Name="DeliverySystem">
+      <Column Name="IDDeliverySystem" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDMesaj" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Provider" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="DeliverySystem_Company" Member="Companies" ThisKey="IDDeliverySystem" OtherKey="IDDeliverySystem" Type="Company" />
+      <Association Name="Mesaje_DeliverySystem" Member="Mesaje" ThisKey="IDMesaj" OtherKey="IDMesaj" Type="Mesaje" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Mesaje" Member="Mesajes">
+    <Type Name="Mesaje">
+      <Column Name="IDMesaj" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IDUser" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Content" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Mesaje_DeliverySystem" Member="DeliverySystems" ThisKey="IDMesaj" OtherKey="IDMesaj" Type="DeliverySystem" />
+      <Association Name="User_Mesaje" Member="User" ThisKey="IDUser" OtherKey="IDUser" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="IDUser" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Mail" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="JoinDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="User_Mesaje" Member="Mesajes" ThisKey="IDUser" OtherKey="IDUser" Type="Mesaje" />
+    </Type>
+  </Table>
+</Database>
